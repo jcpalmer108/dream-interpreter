@@ -71,6 +71,7 @@ class App extends Component {
           open={this.state.open}
           selected={this.state.selected}
         />
+        <Button variant="text" onClick={() => console.log('interpret')}>Interpret my dream</Button>
       </div>
     )
   }
