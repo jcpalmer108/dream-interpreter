@@ -3,3 +3,11 @@
   text-align: center;
   margin: auto;
 }
+
+.symbol-text-field {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
