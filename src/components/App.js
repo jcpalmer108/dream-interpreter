@@ -61,7 +61,9 @@ class App extends Component {
           />
           <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol}>Add</Button>
         </div>
-        {this.generateChips()}
+        <div className="chip-wrapper">
+          {this.generateChips()}
+        </div>
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
         <SpecificsDialog 
