@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Autocomplete, Button, TextField } from '@mui/material';
+import { Autocomplete, Button, TextField, Chip } from '@mui/material';
 import SpecificsDialog from './SpecificsDialog';
 import symbols from '../content/data';
 import './App.css';
@@ -29,6 +29,8 @@ class App extends Component {
     })
   }
 
+  removeChosenSymbol = () => {}
+
   render () {
     return (
       <div className="dream-interpreter">
@@ -48,6 +50,11 @@ class App extends Component {
           />
           <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol}>Add</Button>
         </div>
+        {
+          this.state.chosenSymbols.map((item) => (
+            <Chip key={item.label} label={item.label} onDelete={(e, value) => console.log('delete', e.target.value, value)} />
+          ))
+        }
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
         <SpecificsDialog 

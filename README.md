@@ -1,3 +1,14 @@
+# Dream Interpreter
+<strong>A Class-based React Demo App</strong>
+
+I made this project over a weekend in order to demonstrate my understanding of class-based React. When I first entered the tech industry in 2016, class-based React was the only feasible way to enable state management within a component. Come 2018 however, functional React was introduced enabling a variety of new helper functions built into React to make functions less wordy and more streamlined. 
+
+Personally, I prefer functional React due to its continued development and presence on high-end applications. I appreciate how I don't have to determine up front whether or not a componenent will need state, as I approach writing code with an agile and iterative mindset. I remember several times within my career where a stateless component suddenly needed state and I needed to rewrite a large component to go from a function to a class. With functional React, I don't have to go through this. 
+
+Despite my preferences, class-based React is still the foundation of the knowledge I have pertaining to React. I'm familiar with all React lifecycle hooks, and have the added bonus of knowing how the useState and useEffect functions work. 
+
+> NOTE: This application is still a WIP. When finished, this note will be removed and a live project spun up and demo link shared. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
