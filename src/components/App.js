@@ -29,7 +29,18 @@ class App extends Component {
     })
   }
 
-  removeChosenSymbol = () => {}
+  removeChosenSymbol = (labelToRemove) => {
+    this.setState({
+      ...this.state,
+      chosenSymbols: this.state.chosenSymbols.filter((item) => item.label !== labelToRemove)
+    })
+  }
+
+  generateChips = () => {
+    return this.state.chosenSymbols.map((item, index) => (
+      <Chip key={`chip ${index + 1}`} label={item.label} onDelete={() => this.removeChosenSymbol(item.label)} />
+    ))
+  }
 
   render () {
     return (
@@ -50,11 +61,7 @@ class App extends Component {
           />
           <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol}>Add</Button>
         </div>
-        {
-          this.state.chosenSymbols.map((item) => (
-            <Chip key={item.label} label={item.label} onDelete={(e, value) => console.log('delete', e.target.value, value)} />
-          ))
-        }
+        {this.generateChips()}
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
         <SpecificsDialog 
