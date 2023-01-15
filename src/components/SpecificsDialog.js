@@ -2,11 +2,7 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 
 function SpecificsDialog (props) {
-  const { onClose, selectedValue, open } = props;
-
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  const { handleClose, open } = props;
 
   return (
     <Dialog onClose={handleClose} open={open}>

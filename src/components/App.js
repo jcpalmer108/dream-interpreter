@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Autocomplete, Button, TextField } from '@mui/material';
+import SpecificsDialog from './SpecificsDialog';
 import symbols from '../content/data';
 import './App.css';
 
@@ -42,9 +43,15 @@ class App extends Component {
         </div>
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
+        <SpecificsDialog 
+          handleClose={() => this.setState({
+            ...this.state,
+            open: false,
+          })}
+          open={this.state.open}
+        />
       </div>
     )
-  
   }
 }
 
