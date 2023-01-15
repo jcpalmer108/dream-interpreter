@@ -9,13 +9,15 @@ class App extends Component {
     this.state = { 
       chosenSymbols: [],
       selected: null,
+      open: false,
     };
   }
 
   handleAddSymbol = () => {
     this.setState({
       chosenSymbols: this.state.chosenSymbols.concat([this.state.selected]),
-      selected: null
+      selected: null,
+      open: true,
     })
   }
 
