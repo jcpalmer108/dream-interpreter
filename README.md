@@ -9,6 +9,11 @@ Despite my preferences, class-based React is still the foundation of the knowled
 
 > NOTE: This application is still a WIP. When finished, this note will be removed and a live project spun up and demo link shared. 
 
+## Special thanks to DreamMoods.com
+`Dreammoods.com` was a website I loved to search through growing up. Interpreting my dreams became an entertaining way to pass my morning, as I usually identified with the results provided. 
+
+This application specifically uses data from `Dreammoods.com`, however I've made their data more accessible and easier to use in my demo app. Given that I don't think that website has been updated in over ten years, I doubt we'll see a future iteration such as the one I've proposed but for the time being I'm content with using the app I've created to gather their data. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
