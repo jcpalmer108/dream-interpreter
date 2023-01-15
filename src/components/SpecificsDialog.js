@@ -1,39 +1,72 @@
-import React from 'react';
-import { Dialog, DialogTitle, DialogActions, Button, FormControlLabel, Radio, DialogContent, FormControl, RadioGroup } from '@mui/material';
+import React, { Component } from 'react';
+import { Dialog, DialogTitle, FormControlLabel, Radio, DialogContent, FormControl, RadioGroup } from '@mui/material';
 import './SpecificsDialog.css';
 
-function SpecificsDialog (props) {
-  const { handleClose, selected, open } = props;
+class SpecificsDialog extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 
+      choice: null,
+    };
+  }
 
-  const getLabel = () => selected && selected.label ? selected.label.toLowerCase() : '';
+  getLabel = () => this.props.selected && this.props.selected.label ? this.props.selected.label.toLowerCase() : '';
 
-  return (
-    <Dialog onClose={handleClose} open={open}>
-      <DialogTitle>Let's talk about your choice more...</DialogTitle>
-      <DialogContent>When thinking about the symbol <strong>{getLabel()}</strong> in your dream, did any of these scenarios come up?</DialogContent>
-      <FormControl className="radio-container">
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
-          name="radio-buttons-group"
-        >
-          <FormControlLabel value="female" control={<Radio />} label="Female" />
-          <FormControlLabel value="male" control={<Radio />} label="Male" />
-          <FormControlLabel value="other" control={<Radio />} label="Other" />
-        </RadioGroup>
-     </FormControl>
+  generateRadioButtons = () => {
+    console.log()
+    if(this.props.selected && this.props.selected.specifics) {
+      return this.props.selected.specifics.map((item) => (
+        <FormControlLabel 
+          key={item.label} 
+          value={item.value} 
+          control={<Radio />} 
+          label={item.label} 
+          onClick={() => this.props.onClose({
+            label: this.props.selected.label || null,
+            base: this.props.selected.meaning || null,
+            extra: item.value
+          })} 
+        />)
+      )
+    }
+  }
 
+  render () {
+    return (
+      <Dialog 
+        onClose={() => this.props.onClose({
+          label: this.props.selected.label || null,
+          base: this.props.selected.meaning || null,
+        })} 
+        open={this.props.open}
+      >
+        <DialogTitle>Tell me more</DialogTitle>
+        <DialogContent className="radio-container">
+          <span>When thinking about the symbol <strong>{this.getLabel()}</strong> in your dream, did you ... ?</span>
+          <FormControl>
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              defaultValue="none"
+              name="radio-buttons-group"
+            >
+              {this.generateRadioButtons()}
+              <FormControlLabel 
+                key="none" 
+                value="none" 
+                control={<Radio />} 
+                label="No, none of the above" 
+                onClick={() => this.props.onClose({
+                  label: this.props.selected.label || null,
+                  base: this.props.selected.meaning || null,
+                })} 
+              />
+            </RadioGroup>
+          </FormControl>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
-      
-      <DialogActions>
-        <Button onClick={handleClose}>Exit</Button>
-        <Button onClick={handleClose} variant="contained" autoFocus>
-          Submit
-        </Button>
-      </DialogActions>
-
-    </Dialog>
-  );
 }
 
 export default SpecificsDialog;

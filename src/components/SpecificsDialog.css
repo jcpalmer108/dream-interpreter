@@ -1,3 +1,5 @@
 .radio-container {
-  margin: 0px 50px 0px 50px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
 }

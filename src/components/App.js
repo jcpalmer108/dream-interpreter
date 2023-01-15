@@ -17,8 +17,15 @@ class App extends Component {
   handleAddSymbol = () => {
     this.setState({
       ...this.state,
-      open: true,
-      chosenSymbols: this.state.chosenSymbols.concat([this.state.selected]),
+      open: this.state.selected.specifics.length > 0,
+    })
+  }
+
+  handleDialogClose = (choice) => {
+    this.setState({
+      open: false,
+      selected: null,
+      chosenSymbols: this.state.chosenSymbols.filter((item) => item.label !== choice.label).concat(choice)
     })
   }
 
@@ -44,11 +51,7 @@ class App extends Component {
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
         <SpecificsDialog 
-          handleClose={() => this.setState({
-            ...this.state,
-            open: false,
-            selected: null
-          })}
+          onClose={this.handleDialogClose}
           open={this.state.open}
           selected={this.state.selected}
         />
