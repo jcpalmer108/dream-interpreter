@@ -8,8 +8,15 @@ class App extends Component {
     super(props);
     this.state = { 
       chosenSymbols: [],
-      selected: {},
+      selected: null,
     };
+  }
+
+  handleAddSymbol = () => {
+    this.setState({
+      chosenSymbols: this.state.chosenSymbols.concat([this.state.selected]),
+      selected: null
+    })
   }
 
   render () {
@@ -22,16 +29,17 @@ class App extends Component {
             disablePortal
             id="symbol"
             options={symbols}
+            value={this.state.selected}
             sx={{ width: '100%', marginRight: '10px'}}
             renderInput={(params) => <TextField {...params} label="Dream Symbols" />}
             onChange={(event, value) => {
-              console.log(event, value)
               this.setState({ ...this.state, selected: value})
             }}
           />
-          <Button variant="contained" sx={{ width: 100 }}>Add</Button>
+          <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol}>Add</Button>
         </div>
         <div>{JSON.stringify(this.state.selected)}</div>
+        <div>{JSON.stringify(this.state.chosenSymbols)}</div>
       </div>
     )
   
