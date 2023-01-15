@@ -16,9 +16,9 @@ class App extends Component {
 
   handleAddSymbol = () => {
     this.setState({
-      chosenSymbols: this.state.chosenSymbols.concat([this.state.selected]),
-      selected: null,
+      ...this.state,
       open: true,
+      chosenSymbols: this.state.chosenSymbols.concat([this.state.selected]),
     })
   }
 
@@ -47,8 +47,10 @@ class App extends Component {
           handleClose={() => this.setState({
             ...this.state,
             open: false,
+            selected: null
           })}
           open={this.state.open}
+          selected={this.state.selected}
         />
       </div>
     )
