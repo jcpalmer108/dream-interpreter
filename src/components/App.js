@@ -15,17 +15,19 @@ class App extends Component {
   }
 
   handleAddSymbol = () => {
-    this.setState({
-      ...this.state,
-      open: this.state.selected.specifics.length > 0,
-    })
+    if (this.state.selected.specifics || this.state.selected.redirect) {
+      this.setState({
+        ...this.state,
+        open: true,
+      })  
+    }
   }
 
   handleDialogClose = (choice) => {
     this.setState({
       open: false,
       selected: null,
-      chosenSymbols: this.state.chosenSymbols.filter((item) => item.label !== choice.label).concat(choice)
+      chosenSymbols: this.state.chosenSymbols.filter((item) => (item.label !== choice.label) && (item.label === choice.redirect) && (item.label.redirect !== choice.label) && (choice.redirect !== item.label)).concat(choice)
     })
   }
 
@@ -70,6 +72,7 @@ class App extends Component {
           onClose={this.handleDialogClose}
           open={this.state.open}
           selected={this.state.selected}
+          redirect={this.state.selected && this.state.selected.redirect && symbols.filter((item) => item.label === this.state.selected.redirect)[0]}
         />
         <Button variant="text" onClick={() => console.log('interpret')}>Interpret my dream</Button>
       </div>

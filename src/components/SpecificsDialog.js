@@ -10,12 +10,17 @@ class SpecificsDialog extends Component {
     };
   }
 
-  getLabel = () => this.props.selected && this.props.selected.label ? this.props.selected.label.toLowerCase() : '';
+  getLabel = (label) => label ? label.toLowerCase() : '';
 
   generateRadioButtons = () => {
-    console.log()
-    if(this.props.selected && this.props.selected.specifics) {
-      return this.props.selected.specifics.map((item) => (
+    let options;
+
+    if(this.props.selected && this.props.selected.specifics) options = this.props.selected.specifics
+    else if (this.props.redirect && this.props.redirect.specifics) options = this.props.redirect.specifics
+
+
+    if(options) {
+      return options.map((item) => (
         <FormControlLabel 
           key={item.label} 
           value={item.value} 
@@ -23,15 +28,19 @@ class SpecificsDialog extends Component {
           label={item.label} 
           onClick={() => this.props.onClose({
             label: this.props.selected.label || null,
-            base: this.props.selected.meaning || null,
+            redirect: this.props.redirect ? this.props.redirect.label : null,
+            base: this.props.redirect ? this.props.redirect.meaning : this.props.selected.meaning,
             extra: item.value
           })} 
         />)
-      )
+      )  
     }
+    // const specifics = 
+
   }
 
   render () {
+    console.log('redirect:', this.props.redirect || '')
     return (
       <Dialog 
         onClose={() => this.props.onClose({
@@ -42,7 +51,10 @@ class SpecificsDialog extends Component {
       >
         <DialogTitle>Tell me more</DialogTitle>
         <DialogContent className="radio-container">
-          <span>When thinking about the symbol <strong>{this.getLabel()}</strong> in your dream, did you ... ?</span>
+          { this.props.redirect && (
+            <span>In this case, <strong>{this.getLabel(this.props.selected.label)}</strong> has the same interpretation as the symbol <strong>{this.getLabel(this.props.redirect.label)}</strong>.</span>
+          )}
+          <span>Did you do or see any of the following scenarios in your dream?</span>
           <FormControl>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"

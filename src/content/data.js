@@ -13,10 +13,14 @@ const symbols = [
       }
     ]
   },
-  // {
-  //   label: "Queue",
-  //   redirect: "Line",
-  // },
+  {
+    label: "Queue",
+    redirect: "Line",
+  },
+  {
+    label: "Test",
+    meaning: "Only has a meaning buddy",
+  },
   {
     label: "Line",
     meaning: "To see a line in your dream symbolizes duality, limits, boundaries and rules. It also relates to movement or non-movement. ",
