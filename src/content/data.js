@@ -18,6 +18,10 @@ const symbols = [
     redirect: "Line",
   },
   {
+    label: "Redirect to Test",
+    redirect: "Test",
+  },
+  {
     label: "Test",
     meaning: "Only has a meaning buddy",
   },

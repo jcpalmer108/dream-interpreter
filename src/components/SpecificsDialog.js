@@ -18,7 +18,6 @@ class SpecificsDialog extends Component {
     if(this.props.selected && this.props.selected.specifics) options = this.props.selected.specifics
     else if (this.props.redirect && this.props.redirect.specifics) options = this.props.redirect.specifics
 
-
     if(options) {
       return options.map((item) => (
         <FormControlLabel 
@@ -35,12 +34,9 @@ class SpecificsDialog extends Component {
         />)
       )  
     }
-    // const specifics = 
-
   }
 
   render () {
-    console.log('redirect:', this.props.redirect || '')
     return (
       <Dialog 
         onClose={() => this.props.onClose({

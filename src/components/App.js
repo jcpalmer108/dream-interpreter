@@ -15,19 +15,37 @@ class App extends Component {
   }
 
   handleAddSymbol = () => {
-    if (this.state.selected.specifics || this.state.selected.redirect) {
+    if((this.state.selected && this.state.selected.specifics) || (this.state.selected.redirect && this.state.selected.redirect.specifics)) {
       this.setState({
         ...this.state,
         open: true,
-      })  
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        chosenSymbols: this.addChosenSymbol({
+          label: this.state.selected.label || null,
+          redirect: null,
+          base: this.state.selected.meaning,
+        }),
+        selected: null
+      })
     }
+}
+  addChosenSymbol = (choice) => this.state.chosenSymbols.filter((chosenSymbol) => chosenSymbol.label !== choice.label).concat(choice)
+
+  openDialog = () => {
+    this.setState({
+      ...this.state,
+      open: true,
+    })
   }
 
-  handleDialogClose = (choice) => {
+  closeDialog = (choice) => {
     this.setState({
       open: false,
       selected: null,
-      chosenSymbols: this.state.chosenSymbols.filter((item) => (item.label !== choice.label) && (item.label === choice.redirect) && (item.label.redirect !== choice.label) && (choice.redirect !== item.label)).concat(choice)
+      chosenSymbols: this.addChosenSymbol(choice)
     })
   }
 
@@ -39,6 +57,7 @@ class App extends Component {
   }
 
   generateChips = () => {
+    console.log('this', this.state.chosenSymbols)
     return this.state.chosenSymbols.map((item, index) => (
       <Chip key={`chip ${index + 1}`} label={item.label} onDelete={() => this.removeChosenSymbol(item.label)} />
     ))
@@ -51,6 +70,7 @@ class App extends Component {
         <p>Select various symbols that you may have seen in your dream, and let our engine combile our dream symbol data and tell you what your dream symbols really mean.</p>
         <div className='symbol-text-field'>
           <Autocomplete
+            data-testid="autocomplete"
             disablePortal
             id="symbol"
             options={symbols}
@@ -61,20 +81,21 @@ class App extends Component {
               this.setState({ ...this.state, selected: value})
             }}
           />
-          <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol}>Add</Button>
+          <Button variant="contained" sx={{ width: 100 }} onClick={this.handleAddSymbol} disabled={this.state.selected === null}>Add</Button>
         </div>
-        <div className="chip-wrapper">
+        <div className="chip-wrapper" data-testid="chips">
           {this.generateChips()}
         </div>
         <div>{JSON.stringify(this.state.selected)}</div>
         <div>{JSON.stringify(this.state.chosenSymbols)}</div>
         <SpecificsDialog 
-          onClose={this.handleDialogClose}
+          data-testid="specific-dialog"
+          onClose={this.closeDialog}
           open={this.state.open}
           selected={this.state.selected}
           redirect={this.state.selected && this.state.selected.redirect && symbols.filter((item) => item.label === this.state.selected.redirect)[0]}
         />
-        <Button variant="text" onClick={() => console.log('interpret')}>Interpret my dream</Button>
+        <Button variant="text" onClick={() => console.log('interpret')} disabled={this.state.chosenSymbols.length === 0}>Interpret my dream</Button>
       </div>
     )
   }
