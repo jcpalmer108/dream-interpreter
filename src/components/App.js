@@ -15,7 +15,8 @@ class App extends Component {
   }
 
   handleAddSymbol = () => {
-    if((this.state.selected && this.state.selected.specifics) || (this.state.selected.redirect && this.state.selected.redirect.specifics)) {
+    const redirectedSymbol = symbols.filter((symbol) => symbol.label === this.state.selected.redirect)[0]
+    if((this.state.selected && this.state.selected.specifics) || (redirectedSymbol && redirectedSymbol.specifics) ) {
       this.setState({
         ...this.state,
         open: true,
@@ -23,16 +24,25 @@ class App extends Component {
     } else {
       this.setState({
         ...this.state,
-        chosenSymbols: this.addChosenSymbol({
-          label: this.state.selected.label || null,
-          redirect: null,
-          base: this.state.selected.meaning,
-        }),
+        chosenSymbols: { 
+          label: this.state.selected.label
+        },
         selected: null
       })
     }
-}
-  addChosenSymbol = (choice) => this.state.chosenSymbols.filter((chosenSymbol) => chosenSymbol.label !== choice.label).concat(choice)
+  }
+
+  addChosenSymbol = (choice) => this.state.chosenSymbols.concat(choice)
+
+  // addChosenSymbol = (choice) => this.state.chosenSymbols.filter((chosenSymbols) => {
+  //   if (choice.label === chosenSymbols.label) {
+  //     return false
+  //   } else if (choice.label === chosenSymbols.redirect) {
+  //     return false
+  //   } else {
+  //     return true
+  //   }
+  // }).concat(choice)
 
   openDialog = () => {
     this.setState({
@@ -56,12 +66,9 @@ class App extends Component {
     })
   }
 
-  generateChips = () => {
-    console.log('this', this.state.chosenSymbols)
-    return this.state.chosenSymbols.map((item, index) => (
+  generateChips = () => this.state.chosenSymbols.map((item, index) => (
       <Chip key={`chip ${index + 1}`} label={item.label} onDelete={() => this.removeChosenSymbol(item.label)} />
     ))
-  }
 
   render () {
     return (
@@ -93,7 +100,7 @@ class App extends Component {
           onClose={this.closeDialog}
           open={this.state.open}
           selected={this.state.selected}
-          redirect={this.state.selected && this.state.selected.redirect && symbols.filter((item) => item.label === this.state.selected.redirect)[0]}
+          redirect={this.state.selected && this.state.selected.redirect ? symbols.filter((symbol) => symbol.label === this.state.selected.redirect)[0] : undefined}
         />
         <Button variant="text" onClick={() => console.log('interpret')} disabled={this.state.chosenSymbols.length === 0}>Interpret my dream</Button>
       </div>
