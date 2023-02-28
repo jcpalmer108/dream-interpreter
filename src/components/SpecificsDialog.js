@@ -6,16 +6,11 @@ function SpecificsDialog ({ onClose, open, redirect, selected}) {
   const getLabel = (term) => term ? term.toLowerCase() : ''
 
   const generateRadioButtons = () => {
-    let options = []
+    let options = [];
 
     console.log('redirect', redirect)
     console.log('selected', selected)
 
-    if (selected && selected.specifics) {
-      options = selected.specifics
-    } else if (redirect) {
-      options = redirect.specifics
-    }
 
     const noneOfTheAboveButton = (<FormControlLabel 
       key="none" 
@@ -28,25 +23,7 @@ function SpecificsDialog ({ onClose, open, redirect, selected}) {
       })} 
     />)
 
-    return options && options.map((option, index) => (
-      <FormControlLabel 
-        key={`specific ${index + 1}`} 
-        value={option.value} 
-        control={<Radio />} 
-        label={option.label}
-        onClick={() => onClose(redirect ? {
-          label: selected.label,
-          redirect: redirect.label,
-          meaning: redirect.meaning,
-          extra: option.value
-        } : {
-          label: selected.label,
-          meaning: selected.meaning,
-          extra: option.value
-        })} 
-      />
-    )).concat(noneOfTheAboveButton)
-
+    return options.concat(noneOfTheAboveButton)
   }
 
   return (
@@ -65,14 +42,14 @@ function SpecificsDialog ({ onClose, open, redirect, selected}) {
         )}
         <span>When it comes to the symbol <strong>{redirect ? getLabel(redirect.label) : getLabel(selected && selected.label)}</strong> in your dream, did you...</span>
         <FormControl>
-            <RadioGroup
-              aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="none"
-              name="radio-buttons-group"
-            >
-              {generateRadioButtons()}
-            </RadioGroup>
-          </FormControl>
+          <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="none"
+            name="radio-buttons-group"
+          >
+            {generateRadioButtons()}
+          </RadioGroup>
+        </FormControl>
 
       </DialogContent>
     </Dialog>
